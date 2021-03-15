@@ -14,6 +14,7 @@ void drawSprites();
 void flipPlayer();
 
 struct Player player;
+bool wasColorPushed;
 
 void main() 
 {
@@ -40,6 +41,8 @@ void init()
     player.position[1] = 72;
     player.lastPosition[0] = 0;
     player.lastPosition[1] = 0;
+
+    wasColorPushed = false;
 
     setPlayerTile();
 }
@@ -91,9 +94,17 @@ void setPlayerTile()
 
 void checkInput() 
 {
-    if (joypad() & J_A)
+    if (joypad() & J_A )
     {
-        flipPlayer();
+        if (wasColorPushed == false)
+        {
+            flipPlayer();
+            wasColorPushed = true;
+        }
+    }
+    else
+    {
+        wasColorPushed = false;
     }
 
     if (joypad() & J_UP && player.position[1] > 16) 
